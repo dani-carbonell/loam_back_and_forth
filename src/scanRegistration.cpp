@@ -463,7 +463,7 @@ void laserCloudHandler(const sensor_msgs::PointCloud2ConstPtr& laserCloudIn2)
           fabs(laserCloud->points[cloudSortInd[j]].z) < 30) {
         
         largestPickedNum++;
-        if (largestPickedNum <= 1) {
+        if (largestPickedNum <= 2) {
           laserCloud->points[cloudSortInd[j]].v = 2;
           cornerPointsSharp->push_back(laserCloud->points[cloudSortInd[j]]);
         } else if (largestPickedNum <= 20) {
