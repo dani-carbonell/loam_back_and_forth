@@ -8,7 +8,7 @@
 
   </description>
   <author>Ji Zhang</author>
-  <license>LGPL</license>
+  <license>BSD</license>
   <review status="unreviewed" notes=""/>
   <url>http://wiki.ros.org/loam_back_and_forth</url>
   <depend stack="ros" />
