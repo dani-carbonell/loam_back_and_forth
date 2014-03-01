@@ -629,7 +629,7 @@ void imuHandler(const sensor_msgs::Imu::ConstPtr& imuIn)
 
   imuPointerLast = (imuPointerLast + 1) % imuQueLength;
 
-  imuTime[imuPointerLast] = imuIn->header.stamp.toSec() - 0.105;
+  imuTime[imuPointerLast] = imuIn->header.stamp.toSec() - 0.1068;
   imuRoll[imuPointerLast] = roll;
   imuPitch[imuPointerLast] = pitch;
   imuYaw[imuPointerLast] = yaw;
