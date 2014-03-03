@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(loam_back_and_forth)
 
+set(CMAKE_BUILD_TYPE Release)
+set(BUILD_STATIC_LIBS ON)
+set(BUILD_SHARED_LIBS OFF)
+
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
   roscpp
