@@ -25,7 +25,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserCloudSurround
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -37,12 +37,12 @@ Visualization Manager:
       Reference Frame: camera
       Value: true
     - Class: rviz/Axes
-      Enabled: true
+      Enabled: false
       Length: 0.5
       Name: CameraInit
       Radius: 0.05
       Reference Frame: camera_init_2
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
