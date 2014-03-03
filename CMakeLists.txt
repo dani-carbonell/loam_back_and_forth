@@ -1,35 +1,57 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+cmake_minimum_required(VERSION 2.8.3)
+project(loam_back_and_forth)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
+## Find catkin macros and libraries
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  std_msgs
+  sensor_msgs
+  pcl_ros
+)
 
-rosbuild_init()
+find_package(OpenCV REQUIRED)
+find_package(PCL REQUIRED)
 
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+###################################
+## catkin specific configuration ##
+###################################
 
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-#uncomment if you have defined services
-#rosbuild_gensrv()
+catkin_package(
+  CATKIN_DEPENDS
+  roscpp
+  std_msgs
+  sensor_msgs
+  pcl_ros
+)
 
-#common commands for building c++ executables and libraries
-#rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
-#target_link_libraries(${PROJECT_NAME} another_library)
-#rosbuild_add_boost_directories()
-#rosbuild_link_boost(${PROJECT_NAME} thread)
-#rosbuild_add_executable(example examples/example.cpp)
-#target_link_libraries(example ${PROJECT_NAME})
+###########
+## Build ##
+###########
 
-rosbuild_add_executable(scanRegistration src/scanRegistration.cpp)
-rosbuild_add_executable(laserOdometry src/laserOdometry.cpp)
-rosbuild_add_executable(laserMapping src/laserMapping.cpp)
-rosbuild_add_executable(transformMaintenance src/transformMaintenance.cpp)
+## Specify additional locations of header files
+## Your package locations should be listed before other locations
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
+  /usr/local/include # Location when using 'make system_install'
+  /usr/include       # More usual location (e.g. when installing using a package)
+)
+
+## Specify additional locations for library files
+link_directories(
+  /usr/local/lib # Location when using 'make system_install'
+  /usr/lib       # More usual location (e.g. when installing using a package)
+)
+
+## Declare executables
+add_executable(scanRegistration src/scanRegistration.cpp)
+add_executable(laserOdometry src/laserOdometry.cpp)
+add_executable(laserMapping src/laserMapping.cpp)
+add_executable(transformMaintenance src/transformMaintenance.cpp)
+
+## Specify libraries to link a library or executable target against
+target_link_libraries(scanRegistration ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+target_link_libraries(laserOdometry ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES})
+target_link_libraries(laserMapping ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES})
+target_link_libraries(transformMaintenance ${catkin_LIBRARIES} ${PCL_LIBRARIES})

@@ -1,0 +1,22 @@
+<package>
+  <name>loam_back_and_forth</name>
+  <version>0.0.1</version>
+  <description>Laser Odometry and Mapping (back and forth spin version)</description>
+  <maintainer email="zhangji@cmu.edu">Ji Zhang</maintainer>
+  <url>http://wiki.ros.org/loam_back_and_forth</url>
+  <license>BSD</license>
+
+  <author>Ji Zhang</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>pcl_ros</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>pcl_ros</run_depend>
+</package>
