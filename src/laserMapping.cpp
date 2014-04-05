@@ -287,6 +287,11 @@ int main(int argc, char** argv)
       int centerCubeI = int((transformTobeMapped[3] + 10.0) / 20.0) + laserCloudCenWidth;
       int centerCubeJ = int((transformTobeMapped[4] + 10.0) / 20.0) + laserCloudCenHeight;
       int centerCubeK = int((transformTobeMapped[5] + 10.0) / 20.0) + laserCloudCenDepth;
+      
+      if (transformTobeMapped[3] + 10.0 < 0) centerCubeI--;
+      if (transformTobeMapped[4] + 10.0 < 0) centerCubeJ--;
+      if (transformTobeMapped[5] + 10.0 < 0) centerCubeK--;
+      
       if (centerCubeI < 0 || centerCubeI >= laserCloudWidth || 
           centerCubeJ < 0 || centerCubeJ >= laserCloudHeight || 
           centerCubeK < 0 || centerCubeK >= laserCloudDepth) {
@@ -664,8 +669,12 @@ int main(int argc, char** argv)
           int cubeI = int((pointSel.x + 10.0) / 20.0) + laserCloudCenWidth;
           int cubeJ = int((pointSel.y + 10.0) / 20.0) + laserCloudCenHeight;
           int cubeK = int((pointSel.z + 10.0) / 20.0) + laserCloudCenDepth;
+          
+          if (pointSel.x + 10.0 < 0) cubeI--;
+          if (pointSel.y + 10.0 < 0) cubeJ--;
+          if (pointSel.z + 10.0 < 0) cubeK--;
+          
           int cubeInd = cubeI + laserCloudWidth * cubeJ + laserCloudWidth * laserCloudHeight * cubeK;
-
           laserCloudArray[cubeInd]->push_back(pointSel);
         }
       }
