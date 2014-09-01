@@ -53,9 +53,11 @@ add_executable(scanRegistration src/scanRegistration.cpp)
 add_executable(laserOdometry src/laserOdometry.cpp)
 add_executable(laserMapping src/laserMapping.cpp)
 add_executable(transformMaintenance src/transformMaintenance.cpp)
+add_executable(back_and_forth_movement src/back_and_forth_movement.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(scanRegistration ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 target_link_libraries(laserOdometry ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES})
 target_link_libraries(laserMapping ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES})
 target_link_libraries(transformMaintenance ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+target_link_libraries(back_and_forth_movement ${catkin_LIBRARIES} ${PCL_LIBRARIES})
