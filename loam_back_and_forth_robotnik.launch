@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- load parameters -->
+  <rosparam command="load" file="$(find robotnik_arduimu)/launch/robotnik_arduimu.yaml"/>
+
+  <!-- start robotnik arduimu node -->
+  <node pkg="robotnik_arduimu" type="robotnik_arduimu" name="robotnik_arduimu" output="screen"/>
+
+  <!-- ImuFilter -->
+  <node name="imu_filter_node" pkg="imu_filter_madgwick" type="imu_filter_node" respawn="false" output="screen">
+  
+    <!-- Starts up faster, but timestamps will be inaccurate. --> 
+    <param name="gain" type="double" value="0.1"/>       
+    <param name="use_mag" type="bool" value="false"/>
+    <!--param name="use_mag" type="bool" value="true"/ -->            
+    <!-- Set fixed frame -->
+    <param name="fixed_frame" value="odom"/>
+    <param name="constant_dt" type="double" value="0.0"/>       
+
+  </node> 
+
+
+    <!--
+    Hokuyo driver
+  -->
+  <node name="hokuyo" pkg="hokuyo_node" type="hokuyo_node" respawn="false" output="screen">
+  
+    <!-- Starts up faster, but timestamps will be inaccurate. --> 
+    <param name="calibrate_time" type="bool" value="false"/> 
+    
+    <!-- Set the port to connect to here -->
+    <param name="port" type="string" value="/dev/ttyACM0"/> 
+  
+    <param name="intensity" type="bool" value="false"/>
+    <param name="frame_id" type="string" value="hokuyo_laser_link"/>
+  </node>
+
+    <!--
+    Convert laser scan to 3D point cloud into fixed frame not rotating along with sensor.
+    Also performs scan shadow point filtering
+  -->
+  <node pkg="hector_laserscan_to_pointcloud" type="laserscan_to_pointcloud_node" name="scan_to_ptcld" respawn="true">
+    <param name="min_range" value="0.05" />
+    <param name="use_high_fidelity_projection" value="false" />
+    <param name="target_frame" value="hokuyo_laser_link" />
+    <rosparam command="load" file="$(find hector_laserscan_to_pointcloud)/config/default_scan_shadow_filter.yaml" />
+  </node>
+  
+    <!--
+    LOAM nodes
+  -->
+  <node pkg="loam_back_and_forth" type="scanRegistration" name="scanRegistration" output="screen"/>
+  <node pkg="loam_back_and_forth" type="laserOdometry" name="laserOdometry" output="screen"/>
+  <node pkg="loam_back_and_forth" type="laserMapping" name="laserMapping" output="screen"/>
+  <node pkg="loam_back_and_forth" type="transformMaintenance" name="transformMaintenance" output="screen"/>
+
+  <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find loam_back_and_forth)/loam_back_and_forth.rviz"/>
+    
+
+  
+
+</launch>
